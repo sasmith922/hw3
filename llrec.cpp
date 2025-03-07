@@ -12,7 +12,7 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot)
         return;
     }
 
-    Node* nextNode = head->next; // save rest of list
+    Node* nextNode = head->next; // save list
 
     if (head->val <= pivot) // smaller
     {
