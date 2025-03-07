@@ -1,0 +1,22 @@
+execution codes
+
+for single_and.txt
+    ./logicsim single_and.txt
+    ./logicsim single_and.txt > my_and.uml 
+    java -jar plantuml.jar my_and.uml
+
+
+for single_or.txt
+    ./logicsim single_or.txt
+    ./logicsim single_or.txt > my_or.uml 
+    java -jar plantuml.jar my_or.uml
+
+for single_not.txt
+    ./logicsim single_not.txt
+    ./logicsim single_not.txt > my_not.uml 
+    java -jar plantuml.jar my_not.uml
+
+for exclusive_or.txt
+    ./logicsim exclusive_or.txt
+    ./logicsim exclusive_or.txt > my_exclusive_or.uml 
+    java -jar plantuml.jar my_exclusive_or.uml

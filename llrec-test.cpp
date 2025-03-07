@@ -67,7 +67,37 @@ void dealloc(Node* head)
 //   function object struct declarations
 // -----------------------------------------------
 
+struct IsOdd 
+{
+    bool operator()(int value)
+    {
+        return value % 2 != 0;
+    }
+};
 
+struct IsEven 
+{
+    bool operator()(int value)
+    {
+        return value % 2 == 0;
+    }
+};
+
+struct GreaterThanFive 
+{
+    bool operator()(int value)
+    {
+        return value > 5;
+    }
+};
+
+struct IsNegative 
+{
+    bool operator()(int value)
+    {
+        return value < 0;
+    }
+};
 
 
 
@@ -87,8 +117,76 @@ int main(int argc, char* argv[])
 
     // Test out your linked list code
 
+    // Test code for IsOdd
+    head = llfilter(head, IsOdd());
+    cout << "Filtered list (only evens remain): ";
+    print(head);
+    dealloc(head);
 
+    // Reset
+    head = readList(argv[1]);
 
+    // Test for IsEven
+    Node* filtered2 = llfilter(head, IsEven());
+    cout << "Filtered list (only odds remain): ";
+    print(filtered2);
+    dealloc(filtered2);
+
+    // Reset
+    head = readList(argv[1]);
+
+    // Test for GreaterThanFive
+    Node* filtered3 = llfilter(head, GreaterThanFive());
+    cout << "Filtered list (only numbers ≤ 5 remain): ";
+    print(filtered3);
+    dealloc(filtered3);
+
+    // Reset
+    head = readList(argv[1]);
+
+    // Test for IsNegative
+    Node* filtered4 = llfilter(head, IsNegative());
+    cout << "Filtered list (only non-negatives remain): ";
+    print(filtered4);
+    dealloc(filtered4);
+
+    // Reset
+    head = readList(argv[1]);
+
+    // Filter empty list
+    Node* emptyList = nullptr;
+    Node* filteredEmpty = llfilter(emptyList, IsOdd());
+    cout << "Filtered empty list: ";
+    print(filteredEmpty);
+    dealloc(filteredEmpty);
+
+    // All elements removed
+    Node* allRemoved = llfilter(head, [](int){ return true; }); // Removes everything
+    cout << "Filtered list (everything removed): ";
+    print(allRemoved);
+    dealloc(allRemoved);
+
+    // Reset
+    head = readList(argv[1]);
+
+    // No elements removed
+    Node* noneRemoved = llfilter(head, [](int){ return false; }); // Keeps everything
+    cout << "Filtered list (everything kept): ";
+    print(noneRemoved);
+    dealloc(noneRemoved);
+
+    // Reset
+    head = readList(argv[1]);
+
+    // Test llpivot with pivot = 5
+    Node* smaller = nullptr;
+    Node* larger = nullptr;
+    llpivot(head, smaller, larger, 5);
+    cout << "List with values <= 5: ";
+    print(smaller);
+    cout << "List with values > 5: ";
+    print(larger);
+    cout << "Tests passed!" << endl;
     
     return 0;
 

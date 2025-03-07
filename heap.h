@@ -2,6 +2,7 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <vector> // using vector and vector functions/variables
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -61,13 +62,56 @@ public:
 
 private:
   /// Add whatever helper functions and data members you need below
-
-
-
+  std::vector<T> data;
+  int m;
+  PComparator c;
 
 };
 
 // Add implementation of member functions here
+
+
+template <typename T, typename PComparator>
+Heap<T,PComparator>::Heap(int m, PComparator c) : m(2), c(c)
+{
+}
+
+template <typename T, typename PComparator>
+Heap<T,PComparator>::~Heap()
+{
+}
+
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::push(const T& item)
+{
+  data.push_back(item);
+    std::size_t index = data.size() - 1;
+    while (index > 0) {
+        std::size_t parent_index = (index - 1) / 2;
+        T& current = data[index];
+        T& parent = data[parent_index];
+        if (c(current, parent)) {
+          std::swap(current, parent);
+          index = parent_index;
+        }
+        else
+        {
+          break;
+        } 
+    }
+}
+
+template <typename T, typename PComparator>
+bool Heap<T,PComparator>::empty() const
+{
+  return data.std::vector<T>::size() == 0;
+}
+
+template <typename T, typename PComparator>
+size_t Heap<T,PComparator>::size() const
+{
+  return data.std::vector<T>::size();
+}
 
 
 // We will start top() for you to handle the case of 
@@ -81,14 +125,12 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
-
+    throw std::out_of_range("heap is empty");
 
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-
-
-
+  return data[0];
 }
 
 
@@ -101,11 +143,36 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+    throw std::out_of_range("heap is empty");
   }
 
+  data[0] = data.back(); // swap first and last element
+  data.pop_back(); // pops element
 
+  std::size_t index = 0;
+  std::size_t size = data.std::vector<T>::size();
+
+  while(index < size)
+  {
+      std::size_t left = 2 * index + 1;
+      std::size_t right = 2 * index + 2;
+      std::size_t top = index;
+
+      if (left < size && c(data[left], data[top])) {
+          top = left;
+      }
+
+      if (right < size && c(data[right], data[top])) {
+          top = right;
+      }
+
+      if (top == index) { // no swaps made
+          return;
+      }
+
+      std::swap(data[index], data[top]);
+      index = top;
+  }
 
 }
 
